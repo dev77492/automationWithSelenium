@@ -1,9 +1,14 @@
 import pytest
 from selenium import webdriver
+driver=None
 
-@pytest.fixture(scope="class")
+@pytest.fixture(params=["chrome","firefox"],scope="class")
 def setup(request):
-    driver = webdriver.Chrome()
+    global driver
+    if request.param=="chrome":
+        driver = webdriver.Chrome()
+    elif(request.param=="firefox"):
+        driver = webdriver.Firefox()
     driver.get("https://www.demoblaze.com/index.html")
     driver.maximize_window()
     driver.implicitly_wait(5)
